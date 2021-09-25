@@ -156,6 +156,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import initAPIs from '../../utils/weixinSDK.js';
 export default {
   data() {
     return {
@@ -172,6 +174,25 @@ export default {
     }
   },
   methods: {
+    wxshare() {
+      console.log('sss')
+      axios.post('http://120.77.79.140:3051/app/users/api/get-share-config', {
+        url: window.location.href
+      })
+      .then((response) => {
+        console.log(response)
+        if (response.status == 200) {
+          let param = {
+            name: '你好啊，',
+            desc: '段小丹',
+            url: "http://music.cohao.top/weixi_chen/index.html",
+            img: 'https://img2.baidu.com/it/u=4007823884,653242423&fm=26&fmt=auto',
+          }
+          initAPIs(response.data.data,param)
+        }
+      })
+      .catch((error) =>{})
+    },
     play() {
       if (this.audio.paused) {
         this.audio.play()
@@ -264,9 +285,11 @@ export default {
     }
   },
   created() {
+    this.wxshare()
     let vm = this
+    console.log(this.tracks)
 
-    this.currentTrack = this.tracks[3]
+    this.currentTrack = this.tracks[0]
     this.audio = new Audio()
     this.audio.src = this.currentTrack.url
     this.audio.ontimeupdate = function () {
