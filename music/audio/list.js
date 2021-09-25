@@ -1,0 +1,1 @@
+var list = [{"name":"冬天的秘密","artist":"专辑-张家旺","url":"https://cdn.jsdelivr.net/gh/nj-lizhi/song@master/audio/张家旺/冬天的秘密.flac","cover":"https://cdn.jsdelivr.net/gh/nj-lizhi/song@master/audio/cover.jpge"}]
