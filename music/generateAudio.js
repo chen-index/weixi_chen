@@ -11,10 +11,10 @@ glob("./audio/**/*.{mp3,wav,flac}", {}, function (er, files) {
       result.push({
         name: arr[3].replace(/\.(mp3|flac|wav)$/g, ''),
         artist: "专辑-"+arr[2],
-        url: 'https://cdn.jsdelivr.net/gh/nj-lizhi/song@master' + item.slice(1),
-        cover: 'https://cdn.jsdelivr.net/gh/nj-lizhi/song@master/audio/cover.jpge',
+        url: 'https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@latest/music' + item.slice(1),
+        cover: 'https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@latest/music/audio/cover.jpeg',
       })
-      download += `https://cdn.jsdelivr.net/gh/nj-lizhi/song@master${item.slice(1)}\n`
+      download += `https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@latest/music${item.slice(1)}\n`
     } else {
       console.log('文件大于30M：', item)
     }
