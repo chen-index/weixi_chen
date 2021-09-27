@@ -12,7 +12,7 @@ glob("./audio/**/*.{mp3,wav,flac}", {}, function (er, files) {
         name: arr[3].replace(/\.(mp3|flac|wav)$/g, ''),
         artist: "专辑-"+arr[2],
         url: 'https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music' + item.slice(1),
-        cover: 'https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music/audio/img/6.jpg',
+        cover: 'https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music/audio/img/3.jpg',
       })
       download += `https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music${item.slice(1)}\n`
     } else {

@@ -5,17 +5,19 @@
       <div class="player__top">
         <div class="player-cover">
           <transition-group :name="transitionName">
-            <!-- <div
+            <div
               class="player-cover__item"
               v-if="$index === currentTrackIndex"
               :style="{ backgroundImage: `url(${track.cover})` }"
               v-for="(track, $index) in tracks"
               :key="$index"
-            ></div> -->
-            <div
-              class="player-cover__item"
-              :style="{ backgroundImage: `url(https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music/audio/img/${backgroundImage}.jpg)` }"
             ></div>
+            <!-- <div
+              class="player-cover__item"
+              :style="{ backgroundImage: `url(https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music/audio/img/${imgIndex}.jpg)`}"
+               v-for="(track, $index) in 1"
+              :key="$index"
+            ></div> -->
           </transition-group>
         </div>
         <div class="player-controls">
@@ -166,7 +168,7 @@ import initAPIs from '../../utils/weixinSDK.js';
 export default {
   data() {
     return {
-      backgroundImage: 1,
+      imgIndex: 1,
       audio: null,
       circleLeft: null,
       barWidth: null,
@@ -189,8 +191,8 @@ export default {
     // 变换照片
     initImg() {
       setInterval(() => {
-        this.backgroundImage = Math.random() * (6 - 1) + 1
-      }, 500)
+        this.imgIndex = Math.floor(Math.random() * (6 - 1) + 1)
+      }, 1000)
     },
     wxshare() {
       console.log('sss')
