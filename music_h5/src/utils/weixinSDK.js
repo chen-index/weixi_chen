@@ -3,18 +3,12 @@
  * @param {param} 页面传过来的数据
  */
  import wx from 'weixin-js-sdk'
- function initAPIs(data) {
+ function initAPIs(data, shareInfo) {
      console.log('share')
      console.log(data)
-     console.log(shareInfo)
-     let shareInfo = {
-        name: '你好啊，',
-        desc: '段小丹',
-        url: "http://music.cohao.top/weixi_chen/index.html",
-        img: 'https://img2.baidu.com/it/u=4007823884,653242423&fm=26&fmt=auto',
-      }
+     
     wx.config({
-          debug:false ,// 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          debug:true ,// 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
           appId:data.appID, // 必填，公众号的唯一标识
           timestamp:data.timestamp, // 必填，生成签名的时间戳
           nonceStr:data.nonceStr, // 必填，生成签名的随机串

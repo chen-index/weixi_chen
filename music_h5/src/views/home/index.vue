@@ -170,25 +170,25 @@ export default {
       tracks: list,
       currentTrack: null,
       currentTrackIndex: 0,
-      transitionName: null
+      transitionName: null,
+      shareInfo: {
+        name: '你好啊，',
+        desc: '段小丹',
+        url: window.location.href,
+        img: 'https://img2.baidu.com/it/u=4007823884,653242423&fm=26&fmt=auto',
+      }
     }
   },
   methods: {
     wxshare() {
       console.log('sss')
-      axios.post('http://120.77.79.140:3051/app/users/api/get-share-config', {
+      axios.post('http://120.77.79.140:3000/api/users/api/get-share-config', {
         url: window.location.href
       })
       .then((response) => {
         console.log(response)
         if (response.status == 200) {
-          let param = {
-            name: '你好啊，',
-            desc: '段小丹',
-            url: "http://music.cohao.top/weixi_chen/index.html",
-            img: 'https://img2.baidu.com/it/u=4007823884,653242423&fm=26&fmt=auto',
-          }
-          initAPIs(response.data.data,param)
+          initAPIs(response.data.data, this.shareInfo)
         }
       })
       .catch((error) =>{})
