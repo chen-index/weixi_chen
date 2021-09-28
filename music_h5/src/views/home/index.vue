@@ -14,7 +14,7 @@
             ></div>
             <!-- <div
               class="player-cover__item"
-              :style="{ backgroundImage: `url(https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music/audio/img/${imgIndex}.jpg)`}"
+              :style="{ backgroundImage: `url(https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@v2.0.0/music/audio/img/${imgIndex}.jpg)`}"
                v-for="(track, $index) in 1"
               :key="$index"
             ></div> -->
@@ -162,7 +162,7 @@
 </template>
 
 <script>
-// https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music/audio/img/6.jpg
+// https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@v2.0.0/music/audio/img/6.jpg
 import axios from 'axios'
 import initAPIs from '../../utils/weixinSDK.js';
 export default {

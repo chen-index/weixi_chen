@@ -1,2 +1,2 @@
-https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music/audio/摩登兄弟/探清水河.mp3
-https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@master/music/audio/张家旺/冬天的秘密.mp3
+https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@v2.0.0/music/audio/摩登兄弟/探清水河.mp3
+https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@v2.0.0/music/audio/张家旺/冬天的秘密.mp3
