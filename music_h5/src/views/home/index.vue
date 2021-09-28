@@ -1,6 +1,7 @@
 <!-- home -->
 <template>
   <div class="wrapper">
+    <canvas ref="wrapper_canvas" id="wrapper_canvas"></canvas>
     <div class="player">
       <div class="player__top">
         <div class="player-cover">
@@ -165,6 +166,7 @@
 // https://cdn.jsdelivr.net/gh/chen-index/weixi_chen@v2.0.0/music/audio/img/6.jpg
 import axios from 'axios'
 import initAPIs from '../../utils/weixinSDK.js';
+import initBackground from '@/utils/backgroundCanvas'
 export default {
   data() {
     return {
@@ -184,10 +186,15 @@ export default {
         desc: '段小丹',
         url: window.location.href,
         img: 'https://img2.baidu.com/it/u=4007823884,653242423&fm=26&fmt=auto',
-      }
+      },
+      initOne: true
     }
   },
   methods: {
+    initCanvas() {
+      console.log("初始化canvas")
+      initBackground("wrapper_canvas")
+    },
     // 变换照片
     initImg() {
       setInterval(() => {
@@ -195,8 +202,9 @@ export default {
       }, 1000)
     },
     wxshare() {
-      console.log('sss')
-      axios.post('http://120.77.79.140:3000/api/users/api/get-share-config', {
+      // https://h5.funthin.com/share.do
+      // https://h5.cohao.top/api/users/api/get-share-config
+      axios.post('https://h5.cohao.top/api/users/api/get-share-config', {
         url: window.location.href
       })
       .then((response) => {
@@ -208,6 +216,21 @@ export default {
       .catch((error) =>{})
     },
     play() {
+      if (this.initOne) {
+        this.audio.ontimeupdate = () => {
+          this.generateTime()
+        }
+        this.audio.onloadedmetadata = () => {
+          this.generateTime()
+        }
+        this.audio.onended = () => {
+          this.nextTrack()
+          this.isTimerPlaying = true
+        }
+      }
+      this.initOne = false
+      
+
       if (this.audio.paused) {
         this.audio.play()
         this.isTimerPlaying = true
@@ -300,23 +323,27 @@ export default {
   },
   created() {
     this.initImg()
-    this.wxshare()
     let vm = this
     console.log(this.tracks)
 
     this.currentTrack = this.tracks[0]
     this.audio = new Audio()
     this.audio.src = this.currentTrack.url
-    this.audio.ontimeupdate = function () {
-      vm.generateTime()
-    }
-    this.audio.onloadedmetadata = function () {
-      vm.generateTime()
-    }
-    this.audio.onended = function () {
-      vm.nextTrack()
-      this.isTimerPlaying = true
-    }
+    // this.audio.ontimeupdate = function () {
+    //   vm.generateTime()
+    // }
+    // this.audio.onloadedmetadata = function () {
+    //   vm.generateTime()
+    // }
+    // this.audio.onended = function () {
+    //   vm.nextTrack()
+    //   this.isTimerPlaying = true
+    // }
+    // 初始化wxjssdk分享
+    this.wxshare()
+  },
+  mounted() {
+      this.initCanvas() // 初始化背景
   }
 }
 </script>
@@ -327,6 +354,14 @@ body {
 }
 * {
   box-sizing: border-box;
+}
+#wrapper_canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../../assets/bg.jpg") 100% 100%;
 }
 .icon {
   display: inline-block;
@@ -351,7 +386,9 @@ body {
   }
 }
 .player {
-  background: #eef3f7;
+  // background: #eef3f7;
+  position: relative;
+  background: rgba(255,255,255,0.7);
   width: 410px;
   min-height: 480px;
   box-shadow: 0px 15px 35px -5px rgba(50, 88, 130, 0.32);
@@ -420,6 +457,7 @@ body {
   z-index: 1;
   position: absolute;
   top: 30px;
+  left: 20px;
   transform: scale(0.9);
   filter: blur(10px);
   opacity: 0.9;
