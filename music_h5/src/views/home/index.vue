@@ -5,7 +5,28 @@
     <div class="player">
       <div class="player__top">
         <div class="player-cover">
-          <transition-group :name="transitionName">
+          <div class="wrap">
+            <div>
+              <img src="../../assets/img/1.jpg" alt="">
+            </div>
+            <div>
+              <img src="../../assets/img/2.jpg" alt="">
+            </div>
+            <div>
+              <img src="../../assets/img/3.jpg" alt="">
+            </div>
+            <div>
+              <img src="../../assets/img/4.jpg" alt="">
+            </div>
+            <div>
+              <img src="../../assets/img/5.jpg" alt="">
+            </div>
+            <div>
+              <img src="../../assets/img/6.jpg" alt="">
+            </div>
+            
+          </div>
+          <transition-group :name="transitionName" style="display: none;">
             <div
               class="player-cover__item"
               v-if="$index === currentTrackIndex"
@@ -322,7 +343,7 @@ export default {
     }
   },
   created() {
-    this.initImg()
+    // this.initImg()
     let vm = this
     console.log(this.tracks)
 
@@ -692,4 +713,84 @@ body {
   pointer-events: none;
   opacity: 0;
 }
+
+// 3D盒子
+.wrap{
+		width: 180px;
+		height: 180px;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		margin-left: -90px;
+		margin-top: -120px;
+		-webkit-transform-style: preserve-3d;
+		transform-style: preserve-3d;
+		-webkit-transform: rotateY(0deg) rotateZ(45deg) rotateX(45deg);
+		transform: rotateY(0deg) rotateZ(45deg) rotateX(45deg);
+		// -webkit-transition: all 50000s;
+		// transition: all 50000s;
+		// transition-timing-function: linear;		
+		animation:myrotate 20s linear infinite;
+    -webkit-animation:myrotate 20s linear infinite; /* Safari 和 Chrome */
+	}
+  @keyframes myrotate{
+    from {
+      -webkit-transform: rotateY(0deg) rotateZ(45deg) rotateX(45deg);
+		  transform: rotateY(0deg) rotateZ(45deg) rotateX(45deg);
+    }
+    to {
+      -webkit-transform: rotateY(360deg) rotateZ(45deg) rotateX(45deg);
+		  transform: rotateY(360deg) rotateZ(45deg) rotateX(45deg);
+    }
+  }
+  // .wrap:hover{
+	// 	-webkit-transform: rotateY(-1000000deg) rotateZ(45deg) rotateX(45deg);
+	// 	transform: rotateY(-1000000deg) rotateZ(45deg) rotateX(45deg);
+	// }
+
+	.wrap img{
+		width: 100%;
+		height: 100%;
+		opacity: 0.6;
+		// border-radius: 3px;
+	}
+	.wrap div{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		// border-radius: 50px;
+		/*10px :水平，10px垂直，200px阴影大小*/
+		box-shadow: inset 10px 10px 200px #556B9D, 0 0 150px #FFF;
+	}
+	.wrap div{
+		-webkit-transform: rotateY(0deg) translate3d(0, 0, 90px);
+		transform: rotateY(0deg) translate3d(0, 0, 90px);
+	}
+	.wrap div:nth-child(2){
+		background: #000;
+		-webkit-transform: rotateY(90deg) translate3d(0, 0, 90px);
+		transform: rotateY(90deg) translate3d(0, 0, 90px);
+	}
+	.wrap div:nth-child(3){
+		background: pink;
+		-webkit-transform: rotateY(180deg) translate3d(0, 0, 90px);
+		transform: rotateY(180deg) translate3d(0, 0, 90px);
+	}
+	.wrap div:nth-child(4){
+		background: skyblue;
+		-webkit-transform: rotateY(270deg) translate3d(0, 0, 90px);
+		transform: rotateY(270deg) translate3d(0, 0, 90px);
+	}
+	.wrap div:nth-child(5){
+		background: yellow;
+		-webkit-transform: rotateX(90deg) translate3d(0, 0, 90px);
+		transform: rotateX(90deg) translate3d(0, 0, 90px);
+	}
+	.wrap div:nth-child(6){
+		background: green;
+		-webkit-transform: rotateX(270deg) translate3d(0, 0, 90px);
+		transform: rotateX(270deg) translate3d(0, 0, 90px);
+	}
 </style>

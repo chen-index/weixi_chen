@@ -1,60 +1,86 @@
 <!-- home -->
 <template>
-  <div class="about-container">
-    <div class="warpper">
-      <div class="list">
-        <div class="logo"></div>
-        <div class="demo-home__title">VUE H5开发模板</div>
-        <div class="item">
-          项目地址:
-          <a href="https://github.com/sunniejs/vue-h5-template">https://github.com/sunniejs/vue-h5-template</a>
-        </div>
-        <div class="item">项目作者: sunnie</div>
-        <div class="item"></div>
-        <div class="wechat">
-          <img :src="this.wechat" alt="" />
-        </div>
-        <div class="item">关注公众号：回复“加群”即可加 前端仙女群</div>
-        <div class="item">
-          {{ userName }}
-          <van-button v-if="userName == ''" type="warning" size="small" @click="doDispatch">快点我~</van-button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="about-container" id="about-container"></div>
 </template>
 
 <script>
-// 请求接口
-import { getUserInfo } from '@/api/user.js'
-import { mapGetters } from 'vuex'
+import * as THREE from 'three'
+// import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 export default {
   data() {
     return {
-      wechat: `${this.$cdn}/wx/640.gif`
+      camera: null,
+      scene: null,
+      renderer: null,
+      mesh: null,
+      controls: null
     }
   },
-  computed: {
-    ...mapGetters(['userName'])
-  },
+  computed: {},
   mounted() {
-    this.initData()
+    this.init()
+    this.animate()
   },
   methods: {
-    // 请求数据案例
-    initData() {
-      // 请求接口数据，仅作为展示，需要配置src->config下环境文件
-      const params = { user: 'sunnie' }
-      getUserInfo(params)
-        .then(() => { })
-        .catch(() => { })
+    // 初始化
+    init() {
+      //  创建场景对象Scene
+      this.scene = new THREE.Scene()
+
+      //网格模型添加到场景中
+      let geometry = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+      let material = new THREE.MeshNormalMaterial({
+        color: "white"
+      });
+      this.mesh = new THREE.Mesh(geometry, material);
+      this.scene.add(this.mesh);
+
+      /**
+       * 相机设置
+       */
+      let container = document.getElementById('about-container')
+      this.camera = new THREE.PerspectiveCamera(70, container.clientWidth / container.clientHeight, 0.01, 10)
+      this.camera.position.z = 1
+
+      /**
+       * 光源设置
+       */
+      // 点光源
+      var point = new THREE.PointLight(0xffffff)
+      point.position.set(400, 200, 300) //点光源位置
+      this.scene.add(point) //点光源添加到场景中
+      //环境光
+      var ambient = new THREE.AmbientLight(0x444444)
+      this.scene.add(ambient)
+      let axe = new THREE.AxesHelper(20)
+      this.scene.add(axe) //辅助工具，用于创建相机时，相机找到合适的位置
+
+      // let pointLight = new THREE.PointLight() //创建点光源
+      // pointLight.position.set(4, 2, 4) //设置光源的位置
+      // pointLight.intensity = 1.5 //设置光强
+      // this.scene.add(pointLight)
+
+      let ambientLight = new THREE.AmbientLight()
+      ambientLight.position.set(4, 2, 4)
+      this.scene.add(ambientLight)
+      /**
+       * 创建渲染器对象
+       */
+      this.renderer = new THREE.WebGLRenderer({ antialias: true })
+      this.renderer.setClearColor(0xeeeeee)
+
+      this.renderer.setSize(container.clientWidth, container.clientHeight)
+      container.appendChild(this.renderer.domElement)
+
+      //创建控件对象
+      // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     },
-    // Action 通过 store.dispatch 方法触发
-    doDispatch() {
-      this.$store.dispatch('setUserName', '真乖，赶紧关注公众号，组织都在等你~')
-    },
-    goGithub(index) {
-      window.location.href = 'https://github.com/sunniejs/vue-h5-template'
+    // 动画
+    animate() {
+      requestAnimationFrame(this.animate)
+      this.mesh.rotation.x += 0.005
+      this.mesh.rotation.y += 0.005
+      this.renderer.render(this.scene, this.camera)
     }
   }
 }
@@ -65,49 +91,5 @@ export default {
   background: #fff;
   height: 100vh;
   box-sizing: border-box;
-  .warpper {
-    padding: 50px 12px 12px 12px;
-    .list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #666;
-      font-size: 14px;
-      .demo-home__title {
-        margin: 0 0 6px;
-        font-size: 32px;
-        .demo-home__title img,
-        .demo-home__title span {
-          display: inline-block;
-          vertical-align: middle;
-        }
-      }
-      .item {
-        font-size: 14px;
-        line-height: 34px;
-        a {
-          text-decoration: underline;
-        }
-        .van-button {
-          /* vant-ui 元素*/
-          background: #ff5500;
-        }
-      }
-
-      .logo {
-        width: 120px;
-        height: 120px;
-        background: url($cdn+'/weapp/logo.png') center / contain no-repeat;
-      }
-      .wechat {
-        width: 200px;
-        height: 200px;
-        img {
-          width: 100%;
-          height: auto;
-        }
-      }
-    }
-  }
 }
 </style>
