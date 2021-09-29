@@ -751,7 +751,7 @@ body {
 	.wrap img{
 		width: 100%;
 		height: 100%;
-		opacity: 0.6;
+		// opacity: 0.6;
 		// border-radius: 3px;
 	}
 	.wrap div{
